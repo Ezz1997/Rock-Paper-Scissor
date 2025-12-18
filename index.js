@@ -10,4 +10,10 @@ function getComputerChoice(){
     }
 }
 
+function getHumanChoice(){
+    const humanChoice = prompt("Choose your weapon: Rock, Paper or Scissors");
+    return humanChoice;
+}
+
 console.log(getComputerChoice());
+console.log(getHumanChoice());
