@@ -1,5 +1,6 @@
 let humanScore = 0;
 let computerScore = 0;
+const ROUNDS_NUMBER = 5;
 
 function getComputerChoice(){
     const randomNum = Math.floor(Math.random() * 3);
@@ -27,6 +28,8 @@ function playRound(humanChoice, computerChoice){
                 computerScore++;
             }else if(computerChoice === "rock"){
                 console.log("A Tie!");
+                humanScore++;
+                computerScore++;
             }else if(computerChoice === "scissors"){
                 console.log("You Win! Rock beats Scissors");
                 humanScore++;
@@ -40,6 +43,8 @@ function playRound(humanChoice, computerChoice){
                 humanScore++; 
             }else if(computerChoice === "paper"){
                 console.log("A Tie!");
+                humanScore++;
+                computerScore++;
             }else if(computerChoice === "scissors"){
                 console.log("You Lose! Scissors beats Paper");
                 computerScore++;
@@ -56,14 +61,43 @@ function playRound(humanChoice, computerChoice){
                 humanScore++;
             }else if(computerChoice === "scissors"){
                 console.log("A Tie!");
+                humanScore++;
+                computerScore++;
             }
 
             break;
     }
 }
 
-const humanChoice = getHumanChoice().toLowerCase();
-const computerChoice = getComputerChoice().toLowerCase();
+function playGame(){
 
-playRound(humanChoice, computerChoice);
+    for(let i = 0; i < ROUNDS_NUMBER; i++){
+        console.log("Round " + (i + 1));
+
+        const humanChoice = getHumanChoice().toLowerCase();
+        const computerChoice = getComputerChoice().toLowerCase();
+
+        playRound(humanChoice, computerChoice);
+    }
+
+    printGameResult();
+}
+
+function printGameResult(){
+
+    console.log("Final Result: ");
+
+    if(humanScore > computerScore){
+        console.log("You Win!");
+    }else if(humanScore < computerScore){
+        console.log("You Lose!");
+    }else{
+        console.log("Tie!");
+    }
+
+    console.log("Human Score: " + humanScore);
+    console.log("Computer Score: " + computerScore);
+}
+
+playGame();
 
