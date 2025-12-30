@@ -1,6 +1,5 @@
 let humanScore = 0;
 let computerScore = 0;
-const ROUNDS_NUMBER = 5;
 
 function getComputerChoice(){
     const randomNum = Math.floor(Math.random() * 3);
@@ -67,20 +66,6 @@ function playRound(humanChoice, computerChoice){
 
             break;
     }
-}
-
-function playGame(){
-
-    for(let i = 0; i < ROUNDS_NUMBER; i++){
-        console.log("Round " + (i + 1));
-
-        const humanChoice = getHumanChoice().toLowerCase();
-        const computerChoice = getComputerChoice().toLowerCase();
-
-        playRound(humanChoice, computerChoice);
-    }
-
-    printGameResult();
 }
 
 function printGameResult(){
