@@ -10,14 +10,20 @@ const GameState = Object.freeze({
     LOST: "LOST"
 });
 
+const ComputerChoice = Object.freeze({
+    ROCK: 0,
+    PAPER: 1,
+    SCISSORS: 2
+});
+
 function getComputerChoice(){
     const randomNum = Math.floor(Math.random() * 3);
     
-    if(randomNum === 0){
+    if(randomNum === ComputerChoice.ROCK){
         return "rock";
-    }else if(randomNum === 1){
+    }else if(randomNum === ComputerChoice.PAPER){
         return "paper";
-    }else if(randomNum){
+    }else if(randomNum === ComputerChoice.SCISSORS){
         return "scissors";
     }
 }
