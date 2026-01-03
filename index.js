@@ -103,7 +103,7 @@ function playRound(humanChoice, computerChoice){
     }
 
     const curRoundScoreText = document.createTextNode(textToAppend);
-    const coloredSpan = document.createElement("span");
+    let coloredSpan = document.createElement("span");
     coloredSpan.appendChild(curRoundScoreText);
     coloredSpan.style.color = color;
 
@@ -117,8 +117,22 @@ function playRound(humanChoice, computerChoice){
     updateGameState();
 
     if(gameState === GameState.WON || gameState === GameState.LOST){
-        const finalResultText = gameState === GameState.WON ? "You Win!" : "You Lose!";
-        gameResultDiv.append(finalResultText); 
+        let finalGameResultText = "";
+        let color = "";
+
+        if(gameState === GameState.WON){
+            finalGameResultText = "Congratulations, You Won!";
+            color = "green";
+        }else{
+            finalGameResultText = "Game Over!";
+            color = "red";
+        }
+
+        let coloredSpan = document.createElement("span");
+        coloredSpan.append(finalGameResultText);
+        coloredSpan.style.color = color;
+
+        gameResultDiv.appendChild(coloredSpan); 
     }
 
 }
