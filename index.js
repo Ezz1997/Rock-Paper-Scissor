@@ -3,6 +3,16 @@ let computerScore;
 let roundNum;
 let gameState;
 
+const gameChoiceButtons = document.querySelectorAll(".game-choice");
+const resetGameButton = document.querySelector("#restart-game");
+const gameResultDiv = document.querySelector("#game-result");
+
+gameChoiceButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+        playRound(e.target.innerText.toLowerCase(), getComputerChoice().toLowerCase());
+    });
+});
+
 const GameState = Object.freeze({
     IDLE: "IDLE",
     PLAYING: "PLAYING",
@@ -48,7 +58,6 @@ function playRound(humanChoice, computerChoice){
 
     roundNum++;
 
-    const gameResultDiv = document.querySelector("#game-result");
     const p = document.createElement("p");
     const roundResultText = document.createTextNode(`You Played: ${humanChoice}, Computer Played: ${computerChoice}`);
     p.appendChild(roundResultText);
@@ -158,15 +167,16 @@ function appendNewLine(element){
     element.appendChild(newLine);
 }
 
-const buttons = document.querySelectorAll("button");
 
-buttons.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-        playRound(e.target.innerText.toLowerCase(), getComputerChoice().toLowerCase());
-    });
-});
 
 function startNewGame(){
+
+    gameResultDiv.textContent = ""; 
+
+    resetGameButton.addEventListener("click", (e) => {
+        startNewGame();
+    });
+
     humanScore = 0;
     computerScore = 0;
     roundNum = 0;
