@@ -5,12 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rock Paper Scissor</title>
     <script src="index.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <h1>Rock Paper Scissors</h1>
-    <button class="game-choice">Rock</button>
-    <button class="game-choice">Paper</button>
-    <button class="game-choice">Scissors</button>
+    <button class="game-choice">
+      <img
+        src="game-images/Rock.png"
+        id="rock"
+        class="game-choice-image"
+        alt="Image of a rock"
+      />
+    </button>
+    <button class="game-choice">
+      <img
+        src="game-images/Paper.png"
+        id="paper"
+        class="game-choice-image"
+        alt="Image of a paper"
+      />
+    </button>
+    <button class="game-choice">
+      <img
+        src="game-images/Scissors.png"
+        id="scissors"
+        class="game-choice-image"
+        alt="Image of a scissors"
+      />
+    </button>
+
     <button id="restart-game">Restart</button>
     <div id="game-result"></div>
   </body>

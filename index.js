@@ -9,7 +9,7 @@ const gameResultDiv = document.querySelector("#game-result");
 
 gameChoiceButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-        playRound(e.target.innerText.toLowerCase(), getComputerChoice().toLowerCase());
+        playRound(e.target.id.toLowerCase(), getComputerChoice().toLowerCase());
     });
 });
 

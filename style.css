@@ -1,0 +1,18 @@
+.game-choice{
+    background: transparent;
+    border: none;
+}
+
+.game-choice:hover{
+    border: 5px solid gold;
+}
+
+.game-choice:active{
+    transform: translateY(2px);
+    background-color: gold;
+}
+
+.game-choice-image{
+    height: 100px;
+    width: 100px;
+}
