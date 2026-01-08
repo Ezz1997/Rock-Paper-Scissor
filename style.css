@@ -3,16 +3,25 @@
     border: none;
 }
 
-.game-choice:hover{
-    border: 5px solid gold;
-}
-
 .game-choice:active{
     transform: translateY(2px);
-    background-color: gold;
+}
+
+.game-choice:hover{
+    transform: translateY(2px);
 }
 
 .game-choice-image{
     height: 100px;
     width: 100px;
+}
+
+#restart-game-button{
+    background-color: gold;
+    border: none;
+    border-radius: 5px;
+}
+
+#restart-game-button:hover{
+    background-color: goldenrod;
 }

@@ -4,12 +4,14 @@ let roundNum;
 let gameState;
 
 const gameChoiceButtons = document.querySelectorAll(".game-choice");
-const resetGameButton = document.querySelector("#restart-game");
+const resetGameButton = document.querySelector("#restart-game-button");
 const gameResultDiv = document.querySelector("#game-result");
 
 gameChoiceButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-        playRound(e.target.id.toLowerCase(), getComputerChoice().toLowerCase());
+        if(e.target.id){
+            playRound(e.target.id.toLowerCase(), getComputerChoice().toLowerCase());
+        }
     });
 });
 
@@ -24,6 +26,17 @@ const ComputerChoice = Object.freeze({
     ROCK: 0,
     PAPER: 1,
     SCISSORS: 2
+});
+
+const RoundWinner = Object.freeze({
+    HUMAN: "human",
+    COMPUTER: "computer"
+})
+
+const GameStateColor = Object.freeze({
+    WIN: "green",
+    LOSE: "red",
+    TIE: "grey"
 });
 
 function getComputerChoice(){
@@ -50,17 +63,21 @@ function updateGameState(){
 
 function playRound(humanChoice, computerChoice){
 
+    let roundWinner = "";
+
     updateGameState();
 
     if(gameState !== GameState.PLAYING){
         return;
     }
 
+    gameResultDiv.textContent = "";
+
     roundNum++;
 
     const p = document.createElement("p");
-    const roundResultText = document.createTextNode(`You Played: ${humanChoice}, Computer Played: ${computerChoice}`);
-    p.appendChild(roundResultText);
+    // const roundResultText = document.createTextNode(`You Played: ${humanChoice}, Computer Played: ${computerChoice}`);
+    // p.appendChild(roundResultText);
     let textToAppend = "";
     let color = "#3b3b3b";
 
@@ -68,14 +85,12 @@ function playRound(humanChoice, computerChoice){
         case "rock":
             if(computerChoice === "paper"){
                 textToAppend = "You Lose! Paper beats Rock";
-                color = "red";
-                addPointToComputer();
+                roundWinner = RoundWinner.COMPUTER;
             }else if(computerChoice === "rock"){
                 textToAppend = "A Tie!";
             }else if(computerChoice === "scissors"){
                 textToAppend = "You Win! Rock beats Scissors";
-                color = "green";
-                addPointToHuman();
+                roundWinner = RoundWinner.HUMAN;
             }
 
             break;
@@ -83,14 +98,12 @@ function playRound(humanChoice, computerChoice){
         case "paper":
             if(computerChoice === "rock"){
                 textToAppend = "You Win! Paper beats Rock";
-                color = "green";
-                addPointToHuman(); 
+                roundWinner = RoundWinner.HUMAN;
             }else if(computerChoice === "paper"){
                 textToAppend = "A Tie!";
             }else if(computerChoice === "scissors"){
                 textToAppend = "You Lose! Scissors beats Paper";
-                color = "red";
-                addPointToComputer();
+                roundWinner = RoundWinner.COMPUTER;
             }
 
             break;
@@ -98,18 +111,28 @@ function playRound(humanChoice, computerChoice){
         case "scissors":
             if(computerChoice === "rock"){
                 textToAppend = "You Lose! Rock beats Scissors";
-                color = "red";
-                addPointToComputer(); 
+                roundWinner = RoundWinner.COMPUTER;
             }else if(computerChoice === "paper"){
                 textToAppend = "You Win! Scissors beats Paper";
-                color = "green";
-                addPointToHuman();
+                roundWinner = RoundWinner.HUMAN;
             }else if(computerChoice === "scissors"){
                 textToAppend = "A Tie!";
             }
 
             break;
     }
+
+    if(roundWinner === RoundWinner.HUMAN){
+        addPointToHuman();
+        color = GameStateColor.WIN;
+    }else if(roundWinner === RoundWinner.COMPUTER){
+        addPointToComputer();
+        color = GameStateColor.LOSE;
+    }else{
+        color = GameStateColor.TIE;
+    }
+
+    createGameChoiceImages(humanChoice, computerChoice, "game-choice-image", roundWinner);
 
     const curRoundScoreText = document.createTextNode(textToAppend);
     let coloredSpan = document.createElement("span");
@@ -131,19 +154,59 @@ function playRound(humanChoice, computerChoice){
 
         if(gameState === GameState.WON){
             finalGameResultText = "Congratulations, You Won!";
-            color = "green";
+            color = GameStateColor.WIN;
         }else{
             finalGameResultText = "Game Over!";
-            color = "red";
+            color = GameStateColor.LOSE;
         }
 
         let coloredSpan = document.createElement("span");
         coloredSpan.append(finalGameResultText);
         coloredSpan.style.color = color;
 
+        appendNewLine(gameResultDiv);
         gameResultDiv.appendChild(coloredSpan); 
     }
 
+
+}
+
+function createGameChoiceImages(humanChoice, computerChoice, imgClass, roundWinner){
+
+    const humanChoiceImage = document.createElement("img");
+    const computerChoiceImage = document.createElement("img");
+    let humanImageColor = "";
+    let computerImageColor = "";
+
+    humanChoiceImage.src = `game-images/${humanChoice}.png`;
+    computerChoiceImage.src = `game-images/${computerChoice}.png`;
+
+    humanChoiceImage.classList.add(imgClass);
+    computerChoiceImage.classList.add(imgClass);
+
+    if(roundWinner === RoundWinner.HUMAN){
+        humanImageColor = GameStateColor.WIN;
+        computerImageColor = GameStateColor.LOSE;
+
+    }else if(roundWinner === RoundWinner.COMPUTER){
+        humanImageColor = GameStateColor.LOSE;
+        computerImageColor = GameStateColor.WIN;
+    }else{
+        humanImageColor = GameStateColor.TIE;
+        computerImageColor = GameStateColor.TIE;
+    }
+
+    humanChoiceImage.style.border = `5px solid ${humanImageColor}`;
+    computerChoiceImage.style.border = `5px solid ${computerImageColor}`;
+
+    const p = document.createElement("p");
+    p.append("You Vs Computer");
+    p.style.marginLeft = "50px";
+    gameResultDiv.appendChild(p);
+
+    gameResultDiv.appendChild(humanChoiceImage); 
+    gameResultDiv.append("\t");
+    gameResultDiv.appendChild(computerChoiceImage); 
 }
 
 function addPointToHuman(){
@@ -166,8 +229,6 @@ function appendNewLine(element){
     const newLine = document.createElement("br");
     element.appendChild(newLine);
 }
-
-
 
 function startNewGame(){
 
